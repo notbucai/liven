@@ -1,11 +1,14 @@
 import { prop } from '@typegoose/typegoose';
+import { IsNotEmpty } from 'class-validator';
 
 export class User {
   // 登陆名
   @prop({ required: true, unique: true })
+  @IsNotEmpty()
   username: string;
   // 密码
   @prop()
+  @IsNotEmpty()
   password: string;
   // 用户名
   @prop({ default: '' })
@@ -20,10 +23,11 @@ export class User {
   @prop({ default: '' })
   page: string;
   // 手机号
-  @prop({ unique: true })
+  @prop({ unique: true, required: true })
+  @IsNotEmpty()
   phone: string;
   // 注册时间
-  // 手机号
   @prop({ default: Date.now })
   createTime: Date;
+
 }

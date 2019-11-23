@@ -25,11 +25,14 @@
     "@nestjs/platform-express": "^6.7.2",
     "@typegoose/typegoose": "^6.1.5",
     "@types/mongoose": "^5.5.32",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.11.0",
     "mongoose": "^5.7.12",
     "nestjs-typegoose": "^7.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.5.3",
+    "utility": "^1.16.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.9.0",
