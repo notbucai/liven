@@ -1,5 +1,5 @@
 import { prop } from '@typegoose/typegoose';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsPhoneNumber, IsMobilePhone } from 'class-validator';
 
 export class User {
   // 登陆名
@@ -25,6 +25,7 @@ export class User {
   // 手机号
   @prop({ unique: true, required: true })
   @IsNotEmpty()
+  @IsMobilePhone('zh-CN')
   phone: string;
   // 注册时间
   @prop({ default: Date.now })

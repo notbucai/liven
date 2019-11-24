@@ -1,11 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, HttpException } from '@nestjs/common';
 import { ResBodyHandleInterceptor } from './common/interceptors/res-body-handle.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  // 参数验证
+  app.useGlobalPipes(new ValidationPipe({
+    exceptionFactory(errors) {
+      return new HttpException(errors.map(error => Object.values(error.constraints)[0])[0], 400);
+    },
+  }));
+  // 响应拦截器
   app.useGlobalInterceptors(new ResBodyHandleInterceptor());
   await app.listen(3000);
 }

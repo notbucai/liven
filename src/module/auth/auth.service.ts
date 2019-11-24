@@ -1,25 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { User } from '../../common/schema/user.schema';
-import { ReturnModelType } from '@typegoose/typegoose';
-import { InjectModel } from 'nestjs-typegoose';
+import { Injectable, HttpException } from '@nestjs/common';
+import { UsersService } from '../users/users.service';
+import { md5 } from 'utility';
+
+export enum LoginType {
+  USER_NAME = 1,
+  PHONE = 2,
+}
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User) private readonly user: ReturnModelType<typeof User>) { }
+  constructor(private readonly userServer: UsersService) { }
 
-  varify(loginname: string, password: string) {
-    return this.user.findOne({ $or: [{ username: loginname, phone: loginname }], password });
+  async validate(loginname: string, password: string, type = LoginType.USER_NAME) {
+    let find = null;
+    if (type === LoginType.USER_NAME) {
+      find = this.userServer.findByUsername;
+    } else if (type === LoginType.PHONE) {
+      find = this.userServer.findByPhone;
+    } else {
+      return false;
+    }
+    const user = await find.call(this.userServer, loginname);
+
+    if (user && user.password === md5(password)) {
+      return user;
+    }
+    return false;
   }
 
-  save(doc: User) {
-    return this.user.create(doc);
-  }
-
-  findUserByPhone(phone: string) {
-    return this.user.findOne({ phone });
-  }
-
-  repass(id: string, password: string) {
-    return this.user.findByIdAndUpdate(id, { password });
-  }
 }
