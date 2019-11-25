@@ -1,18 +1,28 @@
 import { prop } from '@typegoose/typegoose';
-import { IsNotEmpty, IsPhoneNumber, IsMobilePhone } from 'class-validator';
+import { Base } from '@typegoose/typegoose/lib/defaultClasses';
 
-export class User {
-  // 登陆名
+export interface IUser {
+  username: string;
+  password: string;
+  phone: string;
+  avatar?: string;
+  page?: string;
+  intro?: string;
+  createTime?: Date;
+}
+
+export class User extends Base implements IUser {
+
+  // _id?: string;
+  // 登陆/用户名名
   @prop({ required: true, unique: true })
-  @IsNotEmpty()
   username: string;
   // 密码
   @prop()
-  @IsNotEmpty()
   password: string;
-  // 用户名
-  @prop({ default: '' })
-  name: string;
+  // // 用户名
+  // @prop({ default: '' })
+  // name: string;
   // 头像
   @prop({ default: '' })
   avatar: string;
@@ -24,8 +34,6 @@ export class User {
   page: string;
   // 手机号
   @prop({ unique: true, required: true })
-  @IsNotEmpty()
-  @IsMobilePhone('zh-CN')
   phone: string;
   // 注册时间
   @prop({ default: Date.now })

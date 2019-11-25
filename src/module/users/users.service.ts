@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '../../common/schema/user.schema';
+import { User, IUser } from '../../common/schema/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 
@@ -18,6 +18,10 @@ export class UsersService {
     return this.userModel.create(doc);
   }
 
+  findById(id: string) {
+    return this.userModel.findById(id);
+  }
+
   findByPhone(phone: string) {
     return this.userModel.findOne({ phone });
   }
@@ -29,4 +33,9 @@ export class UsersService {
   repass(id: string, password: string) {
     return this.userModel.findByIdAndUpdate(id, { password });
   }
+
+  create(user: IUser) {
+    return this.userModel.create(user);
+  }
+
 }
