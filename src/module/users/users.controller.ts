@@ -1,9 +1,11 @@
-import { Controller, Get, Param, Query, UnauthorizedException, ForbiddenException, Delete, Put, Body, Post } from '@nestjs/common';
+import { Controller, Get, Param, Query, UnauthorizedException, ForbiddenException, Delete, Put, Body, Post, UseGuards, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
+import { ApiUseTags, ApiImplicitQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { ListQueryDto, EType } from './users.dto';
 import { User } from '../../common/schema/user.schema';
 import { md5 } from 'utility';
+import { AuthGuard } from '@nestjs/passport';
+import { Request as RequestO } from 'express';
 
 @ApiUseTags('users')
 @Controller('users')
@@ -13,7 +15,6 @@ export class UsersController {
   @Get(':id')
   async user(@Param('id') id: string) {
     const user = await this.userServer.findById(id);
-    delete user.password;
     return user;
   }
 
@@ -43,4 +44,5 @@ export class UsersController {
     user.password = md5(user.password);
     return await this.userServer.update(user);
   }
+
 }

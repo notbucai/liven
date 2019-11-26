@@ -1,15 +1,16 @@
-import { Controller, Post, Body, HttpException } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, ForbiddenException } from '@nestjs/common';
 import { SmsBodyDto, UseType, SignupDto } from './common.dto';
 import { ApiUseTags } from '@nestjs/swagger';
 import { CommonService } from './common.service';
 import { md5 } from 'utility';
-import { UsersService } from '../../../module/users/users.service';
+import { SmsService } from '../sms/sms.service';
+import { UsersService } from 'src/module/users/users.service';
 
 @ApiUseTags('common')
 @Controller()
 export class CommonController {
 
-  constructor(private readonly commonService: CommonService) { }
+  constructor(private readonly usersService: UsersService, private readonly smsService: SmsService) { }
 
   @Post('sendSmsCodeToUser')
   async sendSmsCodeToUser(@Body() SmsBody: SmsBodyDto) {
@@ -19,7 +20,9 @@ export class CommonController {
     switch (useType) {
       case UseType.signup:
 
-        await this.commonService.isPhoneNotExist(mobilePhoneNumber);
+        if (await this.usersService.isPhoneNotExist(mobilePhoneNumber)) {
+          throw new ForbiddenException('手机号已经存在');
+        }
 
         break;
       case UseType.update:
@@ -29,7 +32,7 @@ export class CommonController {
 
         break;
     }
-    const codeSms = await this.commonService.generate(mobilePhoneNumber);
+    const codeSms = await this.smsService.generate(mobilePhoneNumber);
 
     return { detail: codeSms };
   }
@@ -37,18 +40,24 @@ export class CommonController {
   @Post('signup')
   async signup(@Body() signup: SignupDto) {
     const { code, phone, username, password } = signup;
-    const isVerify = await this.commonService.verifyCode(phone, code) || process.env.NODE_ENV === 'dev';
+    const isVerify = await this.smsService.verifyCode(phone, code) || process.env.NODE_ENV === 'dev';
 
     if (!isVerify) {
       throw new HttpException('请检查验证码', 403);
     }
 
-    await this.commonService.isUsernameNotExist(username);
-    await this.commonService.isPhoneNotExist(phone);
-    try {
-      await this.commonService.createUser({ username, phone, password: md5(password) });
+    if (await this.usersService.isUsernameNotExist(username)) {
+      throw new ForbiddenException('用户名已经存在');
+    }
 
-      await this.commonService.removeCode(phone);
+    if (await this.usersService.isPhoneNotExist(phone)) {
+      throw new ForbiddenException('手机号已经存在');
+    }
+
+    try {
+      await this.usersService.create({ username, phone, password: md5(password) });
+
+      await this.smsService.removeCode(phone);
     } catch (error) {
       throw new HttpException(error.errmsg || error.message, 403);
     }

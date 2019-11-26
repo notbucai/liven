@@ -33,7 +33,7 @@ export class UsersService {
   }
 
   findById(id: string) {
-    return this.userModel.findById(id);
+    return this.userModel.findById(id, { password: 0 });
   }
 
   findByPhone(phone: string) {
