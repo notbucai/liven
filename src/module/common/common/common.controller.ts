@@ -37,7 +37,6 @@ export class CommonController {
   async signup(@Body() signup: SignupDto) {
     const { code, phone, username, password } = signup;
     const isVerify = await this.commonService.verifyCode(phone, code);
-    signup.password = md5(password);
 
     if (!isVerify) {
       throw new HttpException('请检查验证码', 403);
@@ -45,7 +44,7 @@ export class CommonController {
     await this.commonService.isUsernameNotExist(username);
     await this.commonService.isPhoneNotExist(phone);
     try {
-      await this.commonService.createUser({ username, phone, password });
+      await this.commonService.createUser({ username, phone, password: md5(password) });
 
       await this.commonService.removeCode(phone);
     } catch (error) {
