@@ -13,6 +13,7 @@ export class CommonController {
 
   @Post('sendSmsCodeToUser')
   async sendSmsCodeToUser(@Body() SmsBody: SmsBodyDto) {
+
     const { mobilePhoneNumber, useType } = SmsBody;
 
     switch (useType) {
@@ -36,11 +37,12 @@ export class CommonController {
   @Post('signup')
   async signup(@Body() signup: SignupDto) {
     const { code, phone, username, password } = signup;
-    const isVerify = await this.commonService.verifyCode(phone, code);
+    const isVerify = await this.commonService.verifyCode(phone, code) || process.env.NODE_ENV === 'dev';
 
     if (!isVerify) {
       throw new HttpException('请检查验证码', 403);
     }
+
     await this.commonService.isUsernameNotExist(username);
     await this.commonService.isPhoneNotExist(phone);
     try {

@@ -10,12 +10,26 @@ export class UsersService {
   isPhoneNotExist(phone: string) {
     return this.userModel.findOne({ phone });
   }
+
   isUsernameNotExist(username: string) {
     return this.userModel.findOne({ username });
   }
 
+  async list(query: string = '', page: number = 1, type: string = 'all', limit = 10) {
+    page = page - 1;
+    return await this.userModel
+      .find({ username: new RegExp(query) }, { password: 0 })
+      .sort({ _id: -1 })
+      .limit(limit)
+      .skip(page * limit);
+  }
+
   save(doc: User) {
     return this.userModel.create(doc);
+  }
+
+  deleteById(id: string) {
+    return this.userModel.deleteOne({ _id: id });
   }
 
   findById(id: string) {
@@ -36,6 +50,9 @@ export class UsersService {
 
   create(user: IUser) {
     return this.userModel.create(user);
+  }
+  update(user: User) {
+    return this.userModel.updateOne({ _id: user._id }, user);
   }
 
 }

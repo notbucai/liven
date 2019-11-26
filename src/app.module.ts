@@ -8,6 +8,8 @@ import { ConfigModule } from 'nestjs-config';
 import { resolve } from 'path';
 import { CommonModule } from './module/common/common/common.module';
 import { RedisModule } from './module/common/redis/redis.module';
+import * as path from 'path';
+const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
@@ -15,7 +17,9 @@ import { RedisModule } from './module/common/redis/redis.module';
     CommonModule,
     AuthModule,
     UsersModule,
-    ConfigModule.load(resolve(__dirname, 'config', '**/!(*.d).{ts,js}')),
+    ConfigModule.load(resolve(__dirname, 'config', '**/!(*.d).{ts,js}'), {
+      path: path.resolve(process.cwd(), !ENV ? '.env' : `.env.${ENV}`),
+    }),
     // RedisModule,
   ],
   controllers: [AppController],
