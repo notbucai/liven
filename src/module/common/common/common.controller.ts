@@ -35,9 +35,9 @@ export class CommonController {
 
   @Post('signup')
   async signup(@Body() signup: SignupDto) {
-    signup.password = md5('password');
     const { code, phone, username, password } = signup;
     const isVerify = await this.commonService.verifyCode(phone, code);
+    signup.password = md5(password);
 
     if (!isVerify) {
       throw new HttpException('请检查验证码', 403);
@@ -52,7 +52,9 @@ export class CommonController {
       throw new HttpException(error.errmsg || error.message, 403);
     }
 
-    return {};
+    return {
+      message: '注册成功',
+    };
   }
 
 }

@@ -8,16 +8,18 @@ export class ResBodyHandleInterceptor implements NestInterceptor {
     return next.handle().pipe(map(data => {
       // const access_token = data.access_token;
       // const detail = data.detail;
-      const { detail, access_token } = data || {};
+      const { detail, access_token, message } = data || {};
       if (data !== null) {
         delete data.detail;
         delete data.access_token;
+        delete data.message;
       }
       return {
         statusCode: 200,
         data,
         access_token,
         detail,
+        message,
       };
     }));
   }
