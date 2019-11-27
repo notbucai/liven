@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { UsersService } from '../users/users.service';
 import { md5 } from 'utility';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../../common/schema/user.schema';
+import { User } from '../../schema/user.schema';
 enum LoginType {
   LOGINNAME_ERROR,
   LOGINPASS_ERROR,

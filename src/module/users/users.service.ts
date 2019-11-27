@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User, IUser } from '../../common/schema/user.schema';
+import { User, IUser } from '../../schema/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 
@@ -21,7 +21,9 @@ export class UsersService {
       .find({ username: new RegExp(query) }, { password: 0 })
       .sort({ _id: -1 })
       .limit(limit)
-      .skip(page * limit);
+      .skip(page * limit)
+      .populate('avatar');
+
   }
 
   save(doc: User) {

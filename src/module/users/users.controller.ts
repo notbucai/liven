@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query, UnauthorizedException, ForbiddenExceptio
 import { UsersService } from './users.service';
 import { ApiUseTags, ApiImplicitQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { ListQueryDto, EType } from './users.dto';
-import { User } from '../../common/schema/user.schema';
+import { User } from '../../schema/user.schema';
 import { md5 } from 'utility';
 import { AuthGuard } from '@nestjs/passport';
 import { Request as RequestO } from 'express';

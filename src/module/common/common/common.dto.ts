@@ -1,6 +1,6 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsMobilePhone, IsEnum, IsEmpty, IsNotEmpty } from 'class-validator';
-import { User } from 'src/common/schema/user.schema';
+import { User } from 'src/schema/user.schema';
 
 export enum UseType {
   signup,

@@ -1,6 +1,6 @@
 import { Controller, Post, Body, HttpException, UseGuards, Request, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { User } from '../../common/schema/user.schema';
+import { User } from '../../schema/user.schema';
 import { AuthGuard } from '@nestjs/passport';
 import { Request as RequestO } from 'express';
 import { UsersService } from '../users/users.service';

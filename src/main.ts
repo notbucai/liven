@@ -18,7 +18,7 @@ async function bootstrap() {
     .setTitle('Liven')
     .setDescription('Liven api docs')
     .setVersion('1.0')
-    .addTag('liven')
+    // .addTag('liven')
     .addBearerAuth('Authorization', 'header')
     .build();
   const document = SwaggerModule.createDocument(app, options);

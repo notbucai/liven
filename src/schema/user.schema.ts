@@ -1,12 +1,13 @@
-import { prop } from '@typegoose/typegoose';
+import { prop, mongoose, Ref, isDocument } from '@typegoose/typegoose';
 import { Base } from '@typegoose/typegoose/lib/defaultClasses';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { Img } from './img.schema';
 
 export interface IUser {
   username: string;
   password: string;
   phone: string;
-  avatar?: string;
+  avatar?: Ref<Img>;
   page?: string;
   intro?: string;
   createTime?: Date;
@@ -27,9 +28,10 @@ export class User extends Base implements IUser {
   // @prop({ default: '' })
   // name: string;
   // 头像
-  @ApiModelProperty({ example: '' })
-  @prop({ default: '' })
-  avatar: string;
+  @ApiModelProperty()
+  @prop({ ref: Img })
+  avatar?: Ref<Img>;
+
   // 介绍
   @ApiModelProperty({ example: '' })
   @prop({ default: '' })
