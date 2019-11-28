@@ -4,7 +4,6 @@ import { Tag } from '../../schema/tag.schema';
 import { ReturnModelType, getModelForClass } from '@typegoose/typegoose';
 import { Img } from '../../schema/img.schema';
 
-
 @Injectable()
 export class TagsService {
   constructor(@InjectModel(Tag.name) private readonly model: ReturnModelType<typeof Tag>) { }
