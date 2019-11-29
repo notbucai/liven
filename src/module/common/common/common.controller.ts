@@ -4,7 +4,7 @@ import { ApiUseTags } from '@nestjs/swagger';
 import { CommonService } from './common.service';
 import { md5 } from 'utility';
 import { SmsService } from '../sms/sms.service';
-import { UsersService } from 'src/module/users/users.service';
+import { UsersService } from '../../../module/users/users.service';
 
 @ApiUseTags('common')
 @Controller()

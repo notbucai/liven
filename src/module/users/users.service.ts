@@ -2,10 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { User, IUser } from '../../schema/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { ReturnModelType } from '@typegoose/typegoose';
+import { TagMap } from '../../schema/tagmap.schema';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) public readonly userModel: ReturnModelType<typeof User>) { }
+  constructor(
+    @InjectModel(User.name) public readonly userModel: ReturnModelType<typeof User>,
+  ) { }
 
   isPhoneNotExist(phone: string) {
     return this.userModel.findOne({ phone });
@@ -53,6 +56,7 @@ export class UsersService {
   create(user: IUser) {
     return this.userModel.create(user);
   }
+
   update(user: User) {
     return this.userModel.updateOne({ _id: user._id }, user);
   }

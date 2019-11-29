@@ -1,4 +1,4 @@
-import { prop, mongoose } from '@typegoose/typegoose';
+import { prop, mongoose, Ref } from '@typegoose/typegoose';
 import { Base } from '@typegoose/typegoose/lib/defaultClasses';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Tag } from './tag.schema';
@@ -9,10 +9,10 @@ import { User } from './user.schema';
  */
 export class TagMap extends Base {
   @ApiModelProperty()
-  @prop({ ref: Tag.name })
-  tagId: mongoose.Types.ObjectId;
+  @prop({ ref: Tag })
+  tag: Ref<Tag>;
 
   @ApiModelProperty()
-  @prop({ ref: User.name })
-  userId: mongoose.Types.ObjectId;
+  @prop({ ref: User })
+  user: Ref<User>;
 }

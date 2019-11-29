@@ -3,10 +3,15 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Tag } from '../../schema/tag.schema';
 import { ReturnModelType, getModelForClass } from '@typegoose/typegoose';
 import { Img } from '../../schema/img.schema';
+import { TagMap } from '../../schema/tagmap.schema';
 
 @Injectable()
 export class TagsService {
-  constructor(@InjectModel(Tag.name) private readonly model: ReturnModelType<typeof Tag>) { }
+  constructor(
+    @InjectModel(Tag.name) private readonly model: ReturnModelType<typeof Tag>,
+    @InjectModel(TagMap.name) private tagMapModel: ReturnModelType<typeof TagMap>,
+
+  ) { }
 
   create(tag: Tag) {
     return this.model.create(tag);
@@ -24,8 +29,28 @@ export class TagsService {
     return this.model.find({ _id: id });
   }
 
-  async read() {
-    return await this.model.find({}).populate('img');
+  read() {
+    return this.model.find({}).populate('img');
+  }
+
+  getAll() {
+    return this.tagMapModel.find({}).sort({ tag: -1 }).populate('user').populate('tag');
+  }
+
+  byUserId(id: string) {
+    return this.tagMapModel.find({ user: id }).populate('tag');
+  }
+
+  byTagId(id: string) {
+    return this.tagMapModel.find({ tag: id }).populate('user').populate('tag');
+  }
+
+  attended(tagmap: { tag: string, user: string }) {
+    return this.tagMapModel.updateOne(tagmap, { $set: tagmap }, { upsert: true });
+  }
+
+  unattended(tagmap: { tag: string, user: string }) {
+    return this.tagMapModel.deleteOne(tagmap);
   }
 
 }

@@ -3,10 +3,12 @@ import { TagsController } from './tags.controller';
 import { TagsService } from './tags.service';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { Tag } from '../../schema/tag.schema';
+import { TagMap } from '../../schema/tagmap.schema';
 
 @Module({
-  imports: [TypegooseModule.forFeature([Tag])],
+  imports: [TypegooseModule.forFeature([Tag]), TypegooseModule.forFeature([TagMap])],
   controllers: [TagsController],
   providers: [TagsService],
+  exports: [TagsService],
 })
 export class TagsModule { }

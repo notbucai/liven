@@ -1,9 +1,13 @@
-import { Controller, Get, Param, Query, UnauthorizedException, ForbiddenException, Delete, Put, Body, Post, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller, Get, Param, Query, UnauthorizedException,
+  ForbiddenException, Delete, Put, Body, Post, UseGuards, Request,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiUseTags, ApiImplicitQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { ListQueryDto, EType } from './users.dto';
 import { User } from '../../schema/user.schema';
 import { md5 } from 'utility';
+import { TagsService } from '../tags/tags.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Request as RequestO } from 'express';
 
@@ -12,12 +16,6 @@ import { Request as RequestO } from 'express';
 export class UsersController {
   constructor(private readonly userServer: UsersService) { }
 
-  @Get(':id')
-  async user(@Param('id') id: string) {
-    const user = await this.userServer.findById(id);
-    return user;
-  }
-
   @Get()
   async list(@Query() listQuery: ListQueryDto) {
     const { p = 1, q, type } = listQuery || {};
@@ -25,6 +23,12 @@ export class UsersController {
       throw new ForbiddenException('参数错误');
     }
     return await this.userServer.list(q, p, type);
+  }
+
+  @Get(':id')
+  async user(@Param('id') id: string) {
+    const user = await this.userServer.findById(id);
+    return user;
   }
 
   @Delete(':id')
