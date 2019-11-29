@@ -8,4 +8,7 @@ export class Img extends Base {
   @ApiModelProperty({ example: 'https://www.baidu.com/img/baidu_resultlogo@2.png' })
   url: string;
 
+  @prop({ default: Date.now() })
+  createTime: Date;
+
 }

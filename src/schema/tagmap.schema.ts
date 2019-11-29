@@ -15,4 +15,7 @@ export class TagMap extends Base {
   @ApiModelProperty()
   @prop({ ref: User })
   user: Ref<User>;
+
+  @prop({ default: Date.now() })
+  createTime: Date;
 }

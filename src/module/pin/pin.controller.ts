@@ -1,6 +1,6 @@
 import { Controller, Param, Get, Body, Delete, Post, Put } from '@nestjs/common';
 import { PinService as Service } from './pin.service';
-import { Pin as SchemaDto } from 'src/schema/pin.schema';
+import { Pin as SchemaDto } from '../../schema/pin.schema';
 import { ApiUseTags } from '@nestjs/swagger';
 
 @Controller('pin')

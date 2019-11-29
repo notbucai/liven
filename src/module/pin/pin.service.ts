@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Pin as Schema } from 'src/schema/pin.schema';
+import { Pin as Schema } from '../../schema/pin.schema';
 import { ReturnModelType } from '@typegoose/typegoose';
 
 @Injectable()
