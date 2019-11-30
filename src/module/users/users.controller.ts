@@ -10,7 +10,8 @@ import { md5 } from 'utility';
 import { TagsService } from '../tags/tags.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Request as RequestO } from 'express';
-
+import { IPlayload } from '../auth/jwt.strategy';
+import { isMongoId } from 'validator';
 @ApiUseTags('users')
 @Controller('users')
 export class UsersController {
@@ -23,6 +24,36 @@ export class UsersController {
       throw new ForbiddenException('参数错误');
     }
     return await this.userServer.list(q, p, type);
+  }
+
+  @ApiBearerAuth()
+  @Get('follow')
+  @UseGuards(AuthGuard('jwt'))
+  async follow(@Query('id') id: string, @Request() req: RequestO) {
+
+    if (!isMongoId(id)) {
+      throw new ForbiddenException('ID 不能为空');
+    }
+    const { id: userId } = req.user as IPlayload;
+    if (id === userId) {
+      throw new ForbiddenException('不能对自己进行操作');
+    }
+
+    return await this.userServer.follow({ user: userId, followUser: id });
+  }
+
+  @ApiBearerAuth()
+  @Get('unfollow')
+  @UseGuards(AuthGuard('jwt'))
+  async unfollow(@Query('id') id: string, @Request() req: RequestO) {
+    if (!isMongoId(id)) {
+      throw new ForbiddenException('ID 不能为空');
+    }
+    const { id: userId } = req.user as IPlayload;
+    if (id === userId) {
+      throw new ForbiddenException('不能对自己进行操作');
+    }
+    return await this.userServer.unfollow({ user: userId, followUser: id });
   }
 
   @Get(':id')
@@ -47,6 +78,18 @@ export class UsersController {
   async update(@Body() user: User) {
     user.password = md5(user.password);
     return await this.userServer.update(user);
+  }
+
+  // 关注者
+  @Get(':id/followerList')
+  async followerList(@Param('id') id: string) {
+    return this.userServer.followerList(id);
+  }
+
+  // 关注了
+  @Get(':id/followList')
+  followList(@Param('id') id: string) {
+    return this.userServer.followList(id);
   }
 
 }

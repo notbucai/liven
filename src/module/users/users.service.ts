@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { User, IUser } from '../../schema/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { ReturnModelType } from '@typegoose/typegoose';
-import { TagMap } from '../../schema/tagmap.schema';
+import { Follow } from '../../schema/follow.schema';
+import { FollowUserDto } from './users.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) public readonly userModel: ReturnModelType<typeof User>,
+    @InjectModel(Follow.name) public readonly followModel: ReturnModelType<typeof Follow>,
   ) { }
 
   isPhoneNotExist(phone: string) {
@@ -61,4 +63,20 @@ export class UsersService {
     return this.userModel.updateOne({ _id: user._id }, user);
   }
 
+  followList(user: string) {
+    return this.followModel.find({ user }).populate('user').populate('followUser');
+  }
+
+  followerList(followUser: string) {
+    return this.followModel.find({ followUser }).populate('user').populate('followUser');
+  }
+
+  follow({ user, followUser }: FollowUserDto) {
+
+    return this.followModel.updateOne({ user, followUser }, { $set: { user, followUser } }, { upsert: true });
+  }
+
+  unfollow({ user, followUser }: FollowUserDto) {
+    return this.followModel.deleteOne({ user, followUser });
+  }
 }

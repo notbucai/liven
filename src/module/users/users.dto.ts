@@ -14,3 +14,9 @@ export class ListQueryDto {
   @ApiModelProperty({ required: false, enum: ['all', 'a', 'b'] })
   type?: EType;
 }
+
+// tslint:disable-next-line: max-classes-per-file
+export class FollowUserDto {
+  user: string;
+  followUser: string;
+}

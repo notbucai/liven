@@ -20,8 +20,8 @@ const ENV = process.env.NODE_ENV;
 @Module({
   imports: [
     TypegooseModule.forRoot('mongodb://localhost/liven', { useNewUrlParser: true, useUnifiedTopology: true }),
-    CommonModule,
     AuthModule,
+    CommonModule,
     UsersModule,
     ConfigModule.load(resolve(__dirname, 'config', '**/!(*.d).{ts,js}'), {
       path: path.resolve(process.cwd(), !ENV ? '.env' : `.env.${ENV}`),
