@@ -72,7 +72,6 @@ export class UsersService {
   }
 
   follow({ user, followUser }: FollowUserDto) {
-
     return this.followModel.updateOne({ user, followUser }, { $set: { user, followUser } }, { upsert: true });
   }
 

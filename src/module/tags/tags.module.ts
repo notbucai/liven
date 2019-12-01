@@ -6,7 +6,7 @@ import { Tag } from '../../schema/tag.schema';
 import { TagMap } from '../../schema/tagmap.schema';
 
 @Module({
-  imports: [TypegooseModule.forFeature([Tag]), TypegooseModule.forFeature([TagMap])],
+  imports: [TypegooseModule.forFeature([Tag, TagMap])],
   controllers: [TagsController],
   providers: [TagsService],
   exports: [TagsService],

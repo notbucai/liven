@@ -6,9 +6,11 @@ import { Pin } from './pin.schema';
 
 export class Like extends Base {
 
+  @ApiModelProperty()
   @prop({ ref: User })
   user: Ref<User>;
 
+  @ApiModelProperty()
   @prop({ ref: Pin })
   pin: Ref<Pin>;
 
