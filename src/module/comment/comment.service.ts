@@ -19,14 +19,50 @@ export class CommentService {
     return this.model.updateOne({ _id: schema._id }, schema);
   }
 
+  getByPId(id: string) {
+    return this.model.find({ pin: id })
+      .populate({
+        path: 'user',
+        populate: {
+          path: 'avatar',
+        },
+      })
+      .populate({
+        path: 'replyUser',
+        populate: {
+          path: 'avatar',
+        },
+      })
+      // .populate('pin')
+      .populate('replyComment');
+  }
+
+  getByUId(id: string) {
+    return this.model.find({ user: id })
+      // .populate({
+      //   path: 'user',
+      //   populate: {
+      //     path: 'avatar',
+      //   },
+      // })
+      .populate({
+        path: 'replyUser',
+        populate: {
+          path: 'avatar',
+        },
+      })
+      .populate('pin')
+      .populate('replyComment');
+  }
+
   getById(id: string) {
     return this.model.find({ _id: id })
-    .populate({
-      path: 'user',
-      populate: {
-        path: 'avatar',
-      },
-    })
+      .populate({
+        path: 'user',
+        populate: {
+          path: 'avatar',
+        },
+      })
       .populate({
         path: 'replyUser',
         populate: {

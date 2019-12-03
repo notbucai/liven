@@ -7,23 +7,23 @@ import { ReturnModelType } from '@typegoose/typegoose';
 export class ImgsService {
   constructor(@InjectModel(Schema.name) private readonly model: ReturnModelType<typeof Schema>) { }
 
-  create(tag: Schema) {
-    return this.model.create(tag);
+  create(img: Schema) {
+    return this.model.create(img);
   }
 
   delete(id: string) {
     return this.model.deleteOne({ _id: id });
   }
 
-  update(tag: Schema) {
-    return this.model.updateOne({ _id: tag._id }, tag);
+  update(img: Schema) {
+    return this.model.updateOne({ _id: img._id }, img).populate('user');
   }
 
   getById(id: string) {
-    return this.model.find({ _id: id });
+    return this.model.find({ _id: id }).populate('user');
   }
 
   read() {
-    return this.model.find({});
+    return this.model.find({}).populate('user');
   }
 }

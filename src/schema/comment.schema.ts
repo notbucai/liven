@@ -20,12 +20,12 @@ export class Comment extends Base {
   // 回复的用户
   @ApiModelProperty()
   @prop({ ref: User })
-  replyUser: Ref<User>;
+  replyUser?: Ref<User>;
 
   // 回复的评论
   @ApiModelProperty()
   @prop({ ref: Comment })
-  replyComment: Ref<Comment>;
+  replyComment?: Ref<Comment>;
 
   // 正文
   @ApiModelProperty()
@@ -35,9 +35,9 @@ export class Comment extends Base {
   // 图片
   @ApiModelProperty()
   @prop({ ref: Img })
-  pic: Ref<Img>;
+  pic?: Ref<Img>;
 
   @prop({ default: Date.now() })
-  createTime: Date;
+  createTime?: Date;
 
 }

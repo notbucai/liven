@@ -31,6 +31,7 @@
     "@types/mongoose": "^5.5.32",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
+    "cos-nodejs-sdk-v5": "^2.5.14",
     "mongoose": "^5.7.12",
     "nestjs-config": "^1.4.4",
     "nestjs-redis": "^1.2.3",
@@ -42,6 +43,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
+    "sharp": "^0.23.3",
     "swagger-ui-express": "^4.1.2",
     "utility": "^1.16.3"
   },

@@ -35,3 +35,5 @@ lerna-debug.log*
 
 # 自定义
 *.key
+*.config.*
+*me.test.ts

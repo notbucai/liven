@@ -8,5 +8,6 @@ import { Like } from '../../schema/like.schema';
   imports: [TypegooseModule.forFeature([Like])],
   controllers: [LikeController],
   providers: [LikeService],
+  exports: [LikeService],
 })
 export class LikeModule { }

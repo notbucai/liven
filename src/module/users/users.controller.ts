@@ -7,15 +7,20 @@ import { ApiUseTags, ApiImplicitQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { ListQueryDto, EType } from './users.dto';
 import { User } from '../../schema/user.schema';
 import { md5 } from 'utility';
-import { TagsService } from '../tags/tags.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Request as RequestO } from 'express';
 import { IPlayload } from '../auth/jwt.strategy';
 import { isMongoId } from 'validator';
+import { LikeService } from '../like/like.service';
+import { CommentService } from '../comment/comment.service';
 @ApiUseTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userServer: UsersService) { }
+  constructor(
+    private readonly userServer: UsersService,
+    private readonly likeServer: LikeService,
+    private readonly commentServer: CommentService,
+  ) { }
 
   @Get()
   async list(@Query() listQuery: ListQueryDto) {
@@ -24,6 +29,32 @@ export class UsersController {
       throw new ForbiddenException('参数错误');
     }
     return await this.userServer.list(q, p, type);
+  }
+
+  @ApiBearerAuth()
+  @Get('like')
+  @UseGuards(AuthGuard('jwt'))
+  async like(@Query('id') id: string, @Request() req: RequestO) {
+
+    if (!isMongoId(id)) {
+      throw new ForbiddenException('ID 不能为空');
+    }
+    const { id: userId } = req.user as IPlayload;
+
+    return await this.likeServer.like({ user: userId, pin: id });
+  }
+
+  @ApiBearerAuth()
+  @Get('unlike')
+  @UseGuards(AuthGuard('jwt'))
+  async unlike(@Query('id') id: string, @Request() req: RequestO) {
+
+    if (!isMongoId(id)) {
+      throw new ForbiddenException('ID 不能为空');
+    }
+    const { id: userId } = req.user as IPlayload;
+
+    return await this.likeServer.unlike({ user: userId, pin: id });
   }
 
   @ApiBearerAuth()
@@ -42,8 +73,8 @@ export class UsersController {
     return await this.userServer.follow({ user: userId, followUser: id });
   }
 
-  @ApiBearerAuth()
   @Get('unfollow')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   async unfollow(@Query('id') id: string, @Request() req: RequestO) {
     if (!isMongoId(id)) {
@@ -90,6 +121,18 @@ export class UsersController {
   @Get(':id/followList')
   followList(@Param('id') id: string) {
     return this.userServer.followList(id);
+  }
+
+  // 喜欢的文章
+  @Get(':id/likeList')
+  async likeList(@Param('id') id: string) {
+    return this.likeServer.getByUId(id);
+  }
+
+  // 关注者
+  @Get(':id/likeList')
+  async commentList(@Param('id') id: string) {
+    return this.commentServer.getByUId(id);
   }
 
 }

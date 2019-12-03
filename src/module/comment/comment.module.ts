@@ -8,5 +8,6 @@ import { Comment } from '../../schema/comment.schema';
   imports: [TypegooseModule.forFeature([Comment])],
   providers: [CommentService],
   controllers: [CommentController],
+  exports: [CommentService],
 })
 export class CommentModule { }
