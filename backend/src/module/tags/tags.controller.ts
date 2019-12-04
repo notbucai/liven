@@ -6,12 +6,16 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request as RequestO } from 'express';
 import { TagDto } from './tags.dto';
 import { IPlayload } from '../auth/jwt.strategy';
+import { PinService } from '../pin/pin.service';
 
 @Controller('tags')
 @ApiUseTags('tags')
 export class TagsController {
 
-  constructor(private readonly tagsService: TagsService) { }
+  constructor(
+    private readonly tagsService: TagsService,
+    private readonly pinService: PinService,
+    ) { }
 
   @Get()
   list() {
@@ -35,7 +39,7 @@ export class TagsController {
 
   @Get(':id')
   read(@Param('id') id: string) {
-    return this.tagsService.getById(id);
+    return this.pinService.getByTId(id);
   }
 
   @Get(':id/attendees')

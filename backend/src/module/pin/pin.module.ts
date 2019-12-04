@@ -10,5 +10,6 @@ import { CommentModule } from '../comment/comment.module';
   imports: [TypegooseModule.forFeature([Pin]), CommentModule, LikeModule],
   providers: [PinService],
   controllers: [PinController],
+  exports: [PinService],
 })
 export class PinModule { }

@@ -45,8 +45,6 @@ export class ImgsController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', {
     fileFilter(_, { mimetype }, callback) {
-      console.log(mimetype);
-
       if (/^image\//.test(mimetype) && /\/(jpeg|png|jpg|gif|bmp)$/.test(mimetype)) {
 
         callback(null, true);

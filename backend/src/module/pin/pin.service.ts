@@ -23,6 +23,21 @@ export class PinService {
     return this.model.find({ _id: id });
   }
 
+  getByTId(id: string) {
+    return this.model.find({ tag: id })
+      .populate({
+        path: 'user',
+        populate: {
+          path: 'avatar',
+        },
+      })
+      .populate('picList')
+      .populate({
+        path: 'tag',
+        populate: { path: 'img' },
+      });
+  }
+
   read() {
     return this.model
       .find({})
