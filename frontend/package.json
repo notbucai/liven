@@ -41,6 +41,7 @@
     "babel-plugin-import": "^1.13.0",
     "customize-cra": "^0.9.1",
     "postcss-pxtorem": "^4.0.1",
-    "react-app-rewired": "^2.1.5"
+    "react-app-rewired": "^2.1.5",
+    "sass-resources-loader": "^2.0.1"
   }
 }

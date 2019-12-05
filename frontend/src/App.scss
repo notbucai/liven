@@ -1,0 +1,12 @@
+.container {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 960px;
+}
+
+@media (max-width: 980px) {
+  .maxnone {
+    display: none;
+  }
+}

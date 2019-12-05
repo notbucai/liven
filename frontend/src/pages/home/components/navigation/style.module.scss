@@ -1,0 +1,16 @@
+.nav {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 15px;
+  width: 120px;
+  box-sizing: border-box;
+
+  .list {
+    text-align: center;
+
+    &:first-child {
+      border-bottom: 1px solid $color;
+    }
+  }
+
+}
