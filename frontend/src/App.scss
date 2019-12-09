@@ -5,6 +5,28 @@
   max-width: 960px;
 }
 
+.follow-button {
+  margin: 0 0 0 auto;
+  padding: 0;
+  width: 55px;
+  height: 26px;
+  font-size: 13px;
+  border-color: $b-color;
+  color: $b-color;
+
+  &:hover {
+    opacity: .8;
+  }
+}
+
+.subscribe-btn {
+  border: 1px solid #37c700;
+  background-color: #fff;
+  color: #37c700;
+  margin: 1rem auto;
+  font-size: 1.1rem;
+}
+
 @media (max-width: 980px) {
   .maxnone {
     display: none;

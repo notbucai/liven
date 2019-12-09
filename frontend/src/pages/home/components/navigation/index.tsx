@@ -4,15 +4,17 @@ const Navigation = () => {
   return (
     <div className={styles.nav}>
       <ul className={styles.list}>
-        <li>推荐</li>
-        <li>热门</li>
-        <li>关注</li>
+        <li>
+          <a href="1" className={styles.active}>推荐</a>
+        </li>
+        <li><a href="2">推荐</a></li>
+        <li><a href="3">推荐</a></li>
       </ul>
       <ul className={styles.list}>
-        <li>推荐是谁</li>
-        <li>热门公司</li>
-        <li>New关注</li>
-        <li>夏季防晒</li>
+        <li><a href="3">谢谢推荐</a></li>
+        <li><a href="3">阿斯顿飞</a></li>
+        <li><a href="3">New是的</a></li>
+        <li><a href="3">洒下地方</a></li>
       </ul>
     </div>
   );

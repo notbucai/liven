@@ -14,10 +14,25 @@ p,
 h1,
 h2,
 h3,
-h4 {
+h4,
+a,
+button {
   padding: 0;
   margin: 0;
 }
-a{
+
+a {
   display: block;
+  color: $s-color;
+  text-decoration: none;
+}
+button{
+  cursor: pointer;
+}
+button,
+input {
+  border: none;
+  &:focus {
+    outline: none;
+  }
 }

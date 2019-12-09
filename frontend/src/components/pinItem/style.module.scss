@@ -1,0 +1,32 @@
+.pin {
+  background-color: #fff;
+  border-radius: 2px;
+  flex-grow: 1;
+  width: 100%;
+
+  .content {
+    font-size: 15px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    color: #17181a;
+    overflow: hidden;
+    margin: 4px 40px 4px 75px;
+    @media (max-width:970px) {
+      & {
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+    }
+  }
+
+  .image {
+    display: block;
+    margin: 4px 40px 0 75px;
+    @media (max-width:970px) {
+      & {
+        margin-left: 30px;
+        margin-right: 20px;
+      }
+    }
+  }
+}
