@@ -64,10 +64,15 @@
 
       .action-item {
         margin: 0 10px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
         color: #76797e;
         cursor: pointer;
         transition: color .2s;
-
+        i{
+          margin-right: 2px;
+        }
         &:hover,
         &.active {
           color: #027fff;

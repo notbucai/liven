@@ -18,16 +18,20 @@ const Image = () => {
       <div className={styles.imageshow}>
         <div className={styles['action-bar']}>
           <div className={[styles['action-item']].join(' ')}>
-            <span>icon</span>
-            <span>操作的内容</span>
+            <i className={['iconfont', 'iconsuoxiao'].join(' ')}></i>
+            <span>收起</span>
           </div>
           <div className={styles['action-item']}>
-            <span>icon</span>
-            <span>操作的内容</span>
+            <i className={['iconfont', 'iconfangda'].join(' ')}></i>
+            <span>查看大图</span>
           </div>
           <div className={styles['action-item']}>
-            <span>icon</span>
-            <span>操作的内容</span>
+            <i className={['iconfont', 'iconxinlingshouyewuicon-'].join(' ')}></i>
+            <span>向左旋转</span>
+          </div>
+          <div className={styles['action-item']}>
+            <i className={['iconfont', 'iconxinlingshouyewuicon-1'].join(' ')}></i>
+            <span>向右旋转</span>
           </div>
         </div>
       </div>
