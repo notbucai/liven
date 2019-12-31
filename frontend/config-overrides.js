@@ -16,7 +16,8 @@ const { override, fixBabelImports, addPostcssPlugins, adjustStyleLoaders } = req
 let a = 1;
 module.exports = override(
   fixBabelImports('import', {
-    libraryName: 'antd-mobile',
+    libraryName: 'antd',
+    libraryDirectory: "es",
     style: 'css',
   }),
 

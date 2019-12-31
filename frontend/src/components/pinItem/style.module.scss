@@ -3,7 +3,10 @@
   border-radius: 2px;
   flex-grow: 1;
   width: 100%;
-
+  &:before {
+    content: "";
+    display: table;
+  }
   .content {
     font-size: 15px;
     line-height: 1.6;
@@ -19,7 +22,7 @@
     }
   }
 
-  .image {
+  .main {
     display: block;
     margin: 4px 40px 0 75px;
     @media (max-width:970px) {
@@ -27,6 +30,25 @@
         margin-left: 30px;
         margin-right: 20px;
       }
+    }
+  }
+  .tag {
+    width: 80px;
+    height: 24px;
+    border-radius: 24px;
+    border: 1px solid $h-color;
+    color: $h-color;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+
+    a {
+      color: $h-color;
+      line-height: 24px;
+      width: 100%;
+      text-align: center;
     }
   }
 }

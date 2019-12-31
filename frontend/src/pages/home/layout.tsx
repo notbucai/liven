@@ -10,7 +10,9 @@ const Layout = () => {
       <div className={styles.left}>
         <Navigation />
       </div>
-      <PinItem />
+      <div className={styles.content}>
+        <PinItem />
+      </div>
     </div>
   );
 }

@@ -21,8 +21,13 @@
     &.img-c6 {
       display: flex;
       flex-wrap: wrap;
-      width: 440px;
       max-width: 100%;
+
+      @media (min-width: 500px) {
+        &{
+          width: 400px;
+        }
+      }
 
       .img-item {
         width: calc((100% - 12PX)/3);
@@ -54,13 +59,14 @@
   }
 
   .imageshow {
-    background-color: #f4f5f7;
+    // display: none;
 
     .action-bar {
       height: 32px;
-      user-select: none;
+      // user-select: none;
       display: flex;
       align-items: center;
+      background-color: #f4f5f7;
 
       .action-item {
         margin: 0 10px;
@@ -70,14 +76,92 @@
         color: #76797e;
         cursor: pointer;
         transition: color .2s;
-        i{
+
+        i {
           margin-right: 2px;
         }
+
         &:hover,
         &.active {
           color: #027fff;
         }
       }
     }
+
+    .imgshow_box {
+      width: 100%;
+      text-align: center;
+      position: relative;
+      cursor: zoom-out;
+      // display: none;
+
+      img {
+        width: 100%;
+      }
+
+      .action {
+        color: #fff;
+        position: absolute;
+        z-index: 10;
+        font-weight: bold;
+        width: 30%;
+        height: 100%;
+        display: block;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-shadow: 0 0px 4px #76797e;
+        cursor: pointer;
+        transition: all .2s;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.082);
+        }
+
+        i {
+          font-size: 30px;
+          visibility: hidden;
+          opacity: 0;
+          transition: all .2s;
+        }
+
+        &:hover i {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+
+      .left {
+        left: 0;
+      }
+
+      .right {
+        right: 0;
+      }
+    }
+
+    .imgminlist {
+      display: flex;
+      margin-top: 6px;
+
+      .imgminitem {
+        margin-right: 1%;
+        width: 10%;
+        opacity: 0.6;
+        box-sizing: border-box;
+        padding: 2px;
+        cursor: pointer;
+        transition: all .4s;
+
+        &:hover,
+        &.active {
+          border: 1px solid $h-color;
+          opacity: 1;
+        }
+      }
+    }
+
+
   }
 }
