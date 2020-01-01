@@ -18,7 +18,7 @@ s这个需求今晚要上线！！！`
         </span>
       </div>
       <div className={styles.main}>
-        <Image />
+        <Image list={[]}/>
         <div className={styles.tag}>
           <a href="1">掘金相亲</a>
         </div>
